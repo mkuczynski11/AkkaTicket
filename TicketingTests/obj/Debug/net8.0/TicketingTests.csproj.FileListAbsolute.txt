@@ -131,3 +131,4 @@ C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\obj\Deb
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\obj\Debug\net8.0\TicketingTests.pdb
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\obj\Debug\net8.0\TicketingTests.genruntimeconfig.cache
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\obj\Debug\net8.0\ref\TicketingTests.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\obj\Debug\net8.0\TicketingTests.sourcelink.json

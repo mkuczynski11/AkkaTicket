@@ -1,8 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using AkkaTicket.Shared.Messages;
-using AkkaTicket.Shared.Messages.Event;
-using AkkaTicket.Shared.Messages.User;
+using AkkaTicket.Shared.Messages.Reservation.Internal;
+using AkkaTicket.Shared.Messages.User.In;
+using AkkaTicket.Shared.Messages.User.Internal;
+using AkkaTicket.Shared.Messages.User.Out;
 
 namespace AkkaTicket.Actors
 {
@@ -19,18 +20,8 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
-                case ReadUserData readUserDataMsg:
-                    if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out var actorRef))
-                    {
-                        Log.Warning($"User actor for {readUserDataMsg.Email} is not registered");
-                        Sender.Tell(new RespondUserDoesNotExist(readUserDataMsg.RequestId));
-                        break;
-                    }
-
-                    actorRef.Forward(readUserDataMsg);
-                    break;
                 case RequestCreateUser createUserMsg:
-                    if (userEmailToActor.TryGetValue(createUserMsg.Email, out actorRef))
+                    if (userEmailToActor.TryGetValue(createUserMsg.Email, out var actorRef))
                     {
                         Log.Warning($"User actor for {createUserMsg.Email} is already registered");
                         Sender.Tell(new RespondUserExists(createUserMsg.RequestId));
@@ -42,7 +33,17 @@ namespace AkkaTicket.Actors
                     Context.Watch(userActor);
                     userEmailToActor.Add(createUserMsg.Email, userActor);
                     actorToUserEmail.Add(userActor, createUserMsg.Email);
-                    Sender.Tell(new RespondUserCreated(createUserMsg.RequestId));
+                    Sender.Tell(new RespondUserCreated(createUserMsg.RequestId, createUserMsg.Email));
+                    break;
+                case RequestReadUserData readUserDataMsg:
+                    if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out actorRef))
+                    {
+                        Log.Warning($"User actor for {readUserDataMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(readUserDataMsg.RequestId));
+                        break;
+                    }
+
+                    actorRef.Forward(readUserDataMsg);
                     break;
                 case RequestChangeUser requestChangeUserMsg:
                     if (!userEmailToActor.TryGetValue(requestChangeUserMsg.Email, out actorRef))
@@ -54,13 +55,23 @@ namespace AkkaTicket.Actors
 
                     actorRef.Forward(requestChangeUserMsg);
                     break;
-                case RespondReservationCreated reservationCreated:
-                    userActor = userEmailToActor[reservationCreated.UserEmail];
-                    userActor.Forward(reservationCreated);
+                case ReservationCreated reservationCreatedMsg:
+                    userActor = userEmailToActor[reservationCreatedMsg.Email];
+                    userActor.Forward(reservationCreatedMsg);
                     break;
                 case ReservationCancelled reservationCancelledMsg:
                     userActor = userEmailToActor[reservationCancelledMsg.Email];
                     userActor.Forward(reservationCancelledMsg);
+                    break;
+                case ReadUserData readUserDataMsg:
+                    if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out actorRef))
+                    {
+                        Log.Warning($"User actor for {readUserDataMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(readUserDataMsg.RequestId));
+                        break;
+                    }
+
+                    actorRef.Forward(readUserDataMsg);
                     break;
                 case Terminated t:
                     var userEmail = actorToUserEmail[t.ActorRef];

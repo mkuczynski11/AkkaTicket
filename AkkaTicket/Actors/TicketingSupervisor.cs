@@ -1,8 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using AkkaTicket.Shared.Messages;
-using AkkaTicket.Shared.Messages.Event;
-using AkkaTicket.Shared.Messages.User;
+using AkkaTicket.Shared.Messages.Event.In;
+using AkkaTicket.Shared.Messages.Reservation.In;
+using AkkaTicket.Shared.Messages.User.In;
 
 namespace AkkaTicket.Actors
 {
@@ -21,31 +22,31 @@ namespace AkkaTicket.Actors
                 case RequestCreateUser requestCreateUserMsg:
                     userManagerActor.Forward(requestCreateUserMsg);
                     break;
-                case ReadUserData readUserDataMsg:
+                case RequestReadUserData readUserDataMsg:
                     userManagerActor.Forward(readUserDataMsg);
                     break;
                 case RequestChangeUser requestChangeUserMsg:
                     userManagerActor.Forward(requestChangeUserMsg);
                     break;
-                case ReadEventData readEventDataMsg:
-                    bookingManagerActor.Forward(readEventDataMsg);
-                    break;
                 case RequestCreateEvent requestCreateEventMsg:
                     bookingManagerActor.Forward(requestCreateEventMsg);
                     break;
-                case RequestCancelEvent requestCancelEventMsg:
-                    bookingManagerActor.Forward(requestCancelEventMsg);
+                case RequestReadEventData readEventDataMsg:
+                    bookingManagerActor.Forward(readEventDataMsg);
                     break;
                 case RequestChangeEvent requestChangeEventMsg:
                     bookingManagerActor.Forward(requestChangeEventMsg);
                     break;
-                case ReserveSeat reserveSeatMsg:
+                case RequestCancelEvent requestCancelEventMsg:
+                    bookingManagerActor.Forward(requestCancelEventMsg);
+                    break;
+                case RequestReserveSeat reserveSeatMsg:
                     bookingManagerActor.Forward(reserveSeatMsg);
                     break;
-                case ReadReservationData readReservationDataMsg:
+                case RequestReadReservationData readReservationDataMsg:
                     bookingManagerActor.Forward(readReservationDataMsg);
                     break;
-                case CancelReservation cancelReservationMsg:
+                case RequestCancelReservation cancelReservationMsg:
                     bookingManagerActor.Forward(cancelReservationMsg);
                     break;
             }

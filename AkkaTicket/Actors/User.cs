@@ -1,8 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using AkkaTicket.Shared.Messages;
-using AkkaTicket.Shared.Messages.Event;
-using AkkaTicket.Shared.Messages.User;
+using AkkaTicket.Shared.Messages.Reservation.Internal;
+using AkkaTicket.Shared.Messages.User.In;
+using AkkaTicket.Shared.Messages.User.Internal;
+using AkkaTicket.Shared.Messages.User.Out;
 
 namespace AkkaTicket.Actors
 {
@@ -36,25 +37,28 @@ namespace AkkaTicket.Actors
         {
             switch (message) 
             {
-                case ReadUserData read when read.Email.Equals(Email):
-                    Sender.Tell(new RespondUserData(read.RequestId, Email, Name, Surname, reservationIdToRservationActor.Keys.ToList()));
+                case RequestReadUserData readMsg when readMsg.Email.Equals(Email):
+                    Sender.Tell(new RespondUserData(readMsg.RequestId, Email, Name, Surname, reservationIdToRservationActor.Keys.ToList()));
                     break;
-                case ReadUserData read:
-                    Log.Warning($"Ignoring ReadUserData request for {read.Email}. This actor is responsible for {this.Email}");
+                case RequestReadUserData readMsg:
+                    Log.Warning($"Ignoring ReadUserData request for {readMsg.Email}. This actor is responsible for {this.Email}");
                     break;
                 case RequestChangeUser requestChangeUserMsg when requestChangeUserMsg.Email.Equals(this.Email):
                     this.Name = requestChangeUserMsg.Name;
                     this.Surname = requestChangeUserMsg.Surname;
                     Sender.Tell(new RespondUserData(requestChangeUserMsg.RequestId, Email, Name, Surname, reservationIdToRservationActor.Keys.ToList()));
                     break;
-                case RespondReservationCreated reservationCreated:
-                    reservationIdToRservationActor.Add(reservationCreated.ReservationId, Sender);
+                case ReservationCreated reservationCreatedMsg:
+                    reservationIdToRservationActor.Add(reservationCreatedMsg.ReservationId, Sender);
                     break;
                 case ReservationCancelled reservationCancelledMsg:
                     if (reservationIdToRservationActor.ContainsKey(reservationCancelledMsg.ReservationId))
                     {
                         reservationIdToRservationActor.Remove(reservationCancelledMsg.ReservationId);
                     }
+                    break;
+                case ReadUserData readMsg when readMsg.Email.Equals(Email):
+                    Sender.Tell(new UserData(readMsg.RequestId, Email));
                     break;
             }
         }

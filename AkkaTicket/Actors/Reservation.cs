@@ -1,7 +1,13 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using AkkaTicket.Shared.Messages.Event;
-using AkkaTicket.Shared.Messages.User;
+using AkkaTicket.Shared.Messages.Event.In;
+using AkkaTicket.Shared.Messages.Event.Internal;
+using AkkaTicket.Shared.Messages.Reservation.In;
+using AkkaTicket.Shared.Messages.Reservation.Internal;
+using AkkaTicket.Shared.Messages.Reservation.Out;
+using AkkaTicket.Shared.Messages.User.In;
+using AkkaTicket.Shared.Messages.User.Internal;
+using AkkaTicket.Shared.Messages.User.Out;
 
 namespace AkkaTicket.Actors
 {
@@ -27,7 +33,7 @@ namespace AkkaTicket.Actors
             EventId = eventId;
             Status = ReservationStates.CREATED;
             Event = eventRef;
-            UserManager = Context.ActorSelection("/user/ticketing/userManager");
+            UserManager = Context.ActorSelection("../../userManager");
         }
         protected ILoggingAdapter Log { get; } = Context.GetLogger();
         protected override void PreStart()
@@ -43,12 +49,12 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
-                case ReserveSeat reserveSeat:
+                case RequestReserveSeat reserveSeatMsg:
                     if (Status.Equals(ReservationStates.CREATED))
                     {
                         var senderActor = Sender;
                         var reservationActor = Self;
-                        var userResponse = await UserManager.Ask<object>(new ReadUserData(reserveSeat.RequestId, reserveSeat.UserEmail));
+                        var userResponse = await UserManager.Ask<object>(new ReadUserData(reserveSeatMsg.RequestId, reserveSeatMsg.UserEmail));
 
                         if (userResponse is RespondUserDoesNotExist)
                         {
@@ -57,7 +63,7 @@ namespace AkkaTicket.Actors
                             break;
                         }
 
-                        var response = await Event.Ask<object>(new ReservationRequest(reserveSeat.RequestId, reserveSeat.SeatId, reservationActor));
+                        var response = await Event.Ask<object>(new ReservationRequest(reserveSeatMsg.RequestId, reserveSeatMsg.SeatId, reservationActor));
                         if (response is ReservationDeclination)
                         {
                             Status = ReservationStates.DECLINED;
@@ -68,29 +74,29 @@ namespace AkkaTicket.Actors
                         ReservationConfirmation responseConfirmation = (ReservationConfirmation) response;
                         Status = ReservationStates.ACTIVE;
                         SeatId = responseConfirmation.SeatId;
-                        UserEmail = reserveSeat.UserEmail;
-                        var reservationCreatedMsg = new RespondReservationCreated(reserveSeat.RequestId, this.Id, this.EventId, this.SeatId, reserveSeat.UserEmail);
-                        senderActor.Tell(reservationCreatedMsg);
-                        UserManager.Tell(reservationCreatedMsg);
+                        UserEmail = reserveSeatMsg.UserEmail;
+                        senderActor.Tell(new RespondReservationCreated(reserveSeatMsg.RequestId, this.Id));
+                        UserManager.Tell(new ReservationCreated(reserveSeatMsg.RequestId, this.Id, this.UserEmail));
                         break;
                     }
                     break;
-                case RequestChangeEvent requestChangeEventMsg:
+                case RequestReadReservationData readReservationDataMsg:
+                    Sender.Tell(new RespondReservationData(readReservationDataMsg.RequestId, Id, Status, EventId, SeatId!));
+                    break;
+                case RequestCancelReservation cancelReservationMsg:
+                    Status = ReservationStates.CANCELED;
+                    Sender.Tell(new RespondReservationCancelled(cancelReservationMsg.RequestId, Id));
+                    var reservationCancelledMsg = new ReservationCancelled(cancelReservationMsg.RequestId, Id, UserEmail!);
+                    Event.Tell(reservationCancelledMsg);
+                    break;
+                case EventChanged eventChangedMsg:
                     Log.Info($"Event for reservation {Id} changed. Sending email to allow reservation changes to be made");
                     // send email of reservation change with an option to cancel reservation
                     break;
-                case RequestCancelEvent requestCancelEventMsg:
+                case EventCancelled eventCancelledMsg:
                     Status = ReservationStates.CANCELED;
+                    Log.Info($"Reservation {Id} has been cancelled because of Event cancellation. Sending email with that information");
                     // send email with reservation cancelation information
-                    break;
-                case ReadReservationData readReservationDataMsg:
-                    Sender.Tell(new RespondReservationData(readReservationDataMsg.RequestId, Id, Status, EventId, SeatId!));
-                    break;
-                case CancelReservation cancelReservationMsg:
-                    Status = ReservationStates.CANCELED;
-                    Sender.Tell(new RespondReservationCancelled(cancelReservationMsg.RequestId));
-                    var reservationCancelledMsg = new ReservationCancelled(cancelReservationMsg.RequestId, Id, UserEmail!);
-                    Event.Tell(reservationCancelledMsg);
                     break;
             }
         }

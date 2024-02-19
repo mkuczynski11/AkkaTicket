@@ -1,12 +1,8 @@
 ﻿using Akka.TestKit.Xunit2;
 using AkkaTicket.Actors;
-using AkkaTicket.Shared.Messages;
+using AkkaTicket.Shared.Messages.User.In;
+using AkkaTicket.Shared.Messages.User.Out;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicketingTests
 {
@@ -37,6 +33,5 @@ namespace TicketingTests
             var secondResponse= probe.ExpectMsg<RespondUserExists>();
             secondResponse.RequestId.Should().Be("22");
         }
-        // TODO: Add test for one flow with actor created by the manager
     }
 }

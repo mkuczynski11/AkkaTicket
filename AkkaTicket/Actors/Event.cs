@@ -1,8 +1,10 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using Akka.Util.Internal;
-using AkkaTicket.Shared.Messages;
-using AkkaTicket.Shared.Messages.Event;
+using AkkaTicket.Shared.Messages.Event.In;
+using AkkaTicket.Shared.Messages.Event.Internal;
+using AkkaTicket.Shared.Messages.Event.Out;
+using AkkaTicket.Shared.Messages.Reservation.Internal;
 
 namespace AkkaTicket.Actors
 {
@@ -32,7 +34,7 @@ namespace AkkaTicket.Actors
         private List<Seat> _seatList = new();
         private Dictionary<string, IActorRef> seatIdToReservationActor = new();
         private Dictionary<IActorRef, string> reservationActorToSeatId = new();
-        public Event(string id, string name, double duration, string location, DateTime date, List<SeatData> seats)
+        public Event(string id, string name, double duration, string location, DateTime date, List<CreateSeatData> seats)
         {
             Id = id;
             Name = name;
@@ -59,12 +61,12 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
-                case ReadEventData read when read.EventId.Equals(this.Id):
+                case RequestReadEventData readMsg when readMsg.EventId.Equals(this.Id):
                     var availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
-                    Sender.Tell(new RespondEventData(read.RequestId, Id, Name, Duration, Location, Date, _seatList.Count, availableSeats.Count(), availableSeats));
+                    Sender.Tell(new RespondEventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
                     break;
-                case ReadEventData read:
-                    Log.Warning($"Ignoring ReadEventData request for {read.EventId}. This actor is responsible for {this.Id}");
+                case RequestReadEventData readMsg:
+                    Log.Warning($"Ignoring ReadEventData request for {readMsg.EventId}. This actor is responsible for {this.Id}");
                     break;
                 case RequestChangeEvent requestChangeEventMsg when requestChangeEventMsg.EventId.Equals(this.Id):
                     this.Name = requestChangeEventMsg.Name;
@@ -72,25 +74,27 @@ namespace AkkaTicket.Actors
                     this.Location = requestChangeEventMsg.Location;
                     this.Date = requestChangeEventMsg.Date;
                     availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
-                    reservationActorToSeatId.Keys.ForEach(reservationActor => reservationActor.Tell(requestChangeEventMsg));
-                    Sender.Tell(new RespondEventData(requestChangeEventMsg.RequestId, Id, Name, Duration, Location, Date, _seatList.Count, availableSeats.Count(), availableSeats));
+                    reservationActorToSeatId.Keys.ForEach(reservationActor => reservationActor.Tell(new EventChanged(requestChangeEventMsg.RequestId)));
+                    Sender.Tell(new RespondEventData(requestChangeEventMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
                     break;
-                case RequestCancelEvent requestCancelEvent when requestCancelEvent.EventId.Equals(this.Id):
+                case RequestCancelEvent requestCancelEventMsg when requestCancelEventMsg.EventId.Equals(this.Id):
                     this.Status = EventStates.CANCELED;
-                    reservationActorToSeatId.Keys.ForEach(reservationActor => reservationActor.Tell(requestCancelEvent));
-                    Sender.Tell(new RespondEventCancelled(requestCancelEvent.RequestId));
+                    reservationActorToSeatId.Keys.ForEach(reservationActor => reservationActor.Tell(new EventCancelled(requestCancelEventMsg.RequestId)));
+                    seatIdToReservationActor.Clear();
+                    reservationActorToSeatId.Clear();
+                    Sender.Tell(new RespondEventCancelled(requestCancelEventMsg.RequestId, Id));
                     break;
-                case ReservationRequest reservationRequest:
-                    if (seatIdToReservationActor.ContainsKey(reservationRequest.SeatId))
+                case ReservationRequest reservationRequestMsg:
+                    if (seatIdToReservationActor.ContainsKey(reservationRequestMsg.SeatId))
                     {
-                        Sender.Tell(new ReservationDeclination(reservationRequest.RequestId));
+                        Sender.Tell(new ReservationDeclination(reservationRequestMsg.RequestId));
                     }
                     else
                     {
-                        seatIdToReservationActor.Add(reservationRequest.SeatId, reservationRequest.ReservationActorRef);
-                        reservationActorToSeatId.Add(reservationRequest.ReservationActorRef, reservationRequest.SeatId);
-                        Context.Watch(reservationRequest.ReservationActorRef);
-                        Sender.Tell(new ReservationConfirmation(reservationRequest.RequestId, reservationRequest.SeatId));
+                        seatIdToReservationActor.Add(reservationRequestMsg.SeatId, reservationRequestMsg.ReservationActorRef);
+                        reservationActorToSeatId.Add(reservationRequestMsg.ReservationActorRef, reservationRequestMsg.SeatId);
+                        Context.Watch(reservationRequestMsg.ReservationActorRef);
+                        Sender.Tell(new ReservationConfirmation(reservationRequestMsg.RequestId, reservationRequestMsg.SeatId));
                     }
                     break;
                 case ReservationCancelled reservationCancelledMsg:
@@ -104,6 +108,6 @@ namespace AkkaTicket.Actors
             }
         }
 
-        public static Props Props(string id, string name, double duration, string location, DateTime date, List<SeatData> seats) => Akka.Actor.Props.Create(() => new Event(id, name, duration, location, date, seats));
+        public static Props Props(string id, string name, double duration, string location, DateTime date, List<CreateSeatData> seats) => Akka.Actor.Props.Create(() => new Event(id, name, duration, location, date, seats));
     }
 }

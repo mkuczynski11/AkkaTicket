@@ -1,7 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using AkkaTicket.Shared.Messages;
-using AkkaTicket.Shared.Messages.Event;
+using AkkaTicket.Shared.Messages.Event.In;
+using AkkaTicket.Shared.Messages.Event.Out;
+using AkkaTicket.Shared.Messages.Reservation.In;
+using AkkaTicket.Shared.Messages.Reservation.Out;
 
 namespace AkkaTicket.Actors
 {
@@ -21,16 +23,6 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
-                case ReadEventData readEventDataMsg:
-                    if (!eventIdToActor.TryGetValue(readEventDataMsg.EventId, out var actorRef))
-                    {
-                        Log.Warning($"Event actor for {readEventDataMsg.EventId} is not created");
-                        Sender.Tell(new RespondEventDoesNotExist(readEventDataMsg.RequestId));
-                        break;
-                    }
-
-                    actorRef.Forward(readEventDataMsg);
-                    break;
                 case RequestCreateEvent requestCreateEventMsg:
                     Log.Info($"Creating Event actor for {requestCreateEventMsg.Name}");
                     var eventId = Guid.NewGuid().ToString();
@@ -40,15 +32,15 @@ namespace AkkaTicket.Actors
                     actorToEventId.Add(eventActor, eventId);
                     Sender.Tell(new RespondEventCreated(requestCreateEventMsg.RequestId, eventId));
                     break;
-                case RequestCancelEvent requestCancelEventMsg:
-                    if (!eventIdToActor.TryGetValue(requestCancelEventMsg.EventId, out actorRef))
+                case RequestReadEventData readEventDataMsg:
+                    if (!eventIdToActor.TryGetValue(readEventDataMsg.EventId, out var actorRef))
                     {
-                        Log.Warning($"Event actor for {requestCancelEventMsg.EventId} is not created");
-                        Sender.Tell(new RespondEventDoesNotExist(requestCancelEventMsg.RequestId));
+                        Log.Warning($"Event actor for {readEventDataMsg.EventId} is not created");
+                        Sender.Tell(new RespondEventDoesNotExist(readEventDataMsg.RequestId));
                         break;
                     }
 
-                    actorRef.Forward(requestCancelEventMsg);
+                    actorRef.Forward(readEventDataMsg);
                     break;
                 case RequestChangeEvent requestChangeEventMsg:
                     if (!eventIdToActor.TryGetValue(requestChangeEventMsg.EventId, out actorRef))
@@ -60,7 +52,17 @@ namespace AkkaTicket.Actors
 
                     actorRef.Forward(requestChangeEventMsg);
                     break;
-                case ReserveSeat reserveSeat:
+                case RequestCancelEvent requestCancelEventMsg:
+                    if (!eventIdToActor.TryGetValue(requestCancelEventMsg.EventId, out actorRef))
+                    {
+                        Log.Warning($"Event actor for {requestCancelEventMsg.EventId} is not created");
+                        Sender.Tell(new RespondEventDoesNotExist(requestCancelEventMsg.RequestId));
+                        break;
+                    }
+
+                    actorRef.Forward(requestCancelEventMsg);
+                    break;
+                case RequestReserveSeat reserveSeat:
                     if (!eventIdToActor.TryGetValue(reserveSeat.EventId, out var eventRef))
                     {
                         Log.Warning($"Event actor for {reserveSeat.EventId} is not created");
@@ -75,7 +77,7 @@ namespace AkkaTicket.Actors
                     actorToReservationId.Add(reservationActor, reservationId);
                     reservationActor.Forward(reserveSeat);
                     break;
-                case ReadReservationData readReservationDataMsg:
+                case RequestReadReservationData readReservationDataMsg:
                     if (!reservationIdToActor.TryGetValue(readReservationDataMsg.ReservationId, out var reservationRef))
                     {
                         Log.Warning($"Reservation actor for {readReservationDataMsg.ReservationId} is not created");
@@ -85,7 +87,7 @@ namespace AkkaTicket.Actors
 
                     reservationRef.Forward(readReservationDataMsg);
                     break;
-                case CancelReservation cancelReservationMsg:
+                case RequestCancelReservation cancelReservationMsg:
                     if (!reservationIdToActor.TryGetValue(cancelReservationMsg.ReservationId, out reservationRef))
                     {
                         Log.Warning($"Reservation actor for {cancelReservationMsg.ReservationId} is not created");
