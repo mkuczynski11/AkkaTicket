@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaTicket", "AkkaTicket\AkkaTicket.csproj", "{E3BDCCFD-E6B8-468B-A88F-118FFAF74E88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingTests", "TicketingTests\TicketingTests.csproj", "{53B7A129-003D-423A-AC06-91909C3A73E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3BDCCFD-E6B8-468B-A88F-118FFAF74E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BDCCFD-E6B8-468B-A88F-118FFAF74E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BDCCFD-E6B8-468B-A88F-118FFAF74E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BDCCFD-E6B8-468B-A88F-118FFAF74E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53B7A129-003D-423A-AC06-91909C3A73E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B7A129-003D-423A-AC06-91909C3A73E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B7A129-003D-423A-AC06-91909C3A73E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B7A129-003D-423A-AC06-91909C3A73E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7890E51-3C31-4C74-A752-1788245F8E13}
+	EndGlobalSection
+EndGlobal

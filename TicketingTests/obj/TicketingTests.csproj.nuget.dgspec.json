@@ -1,0 +1,169 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\TicketingTests\\TicketingTests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj",
+        "projectName": "AkkaTicket",
+        "projectPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj",
+        "packagesPath": "C:\\Users\\mkuczynski11\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mkuczynski11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Akka": {
+              "target": "Package",
+              "version": "[1.5.16, )"
+            },
+            "Akka.DependencyInjection": {
+              "target": "Package",
+              "version": "[1.5.16, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\TicketingTests\\TicketingTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\TicketingTests\\TicketingTests.csproj",
+        "projectName": "TicketingTests",
+        "projectPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\TicketingTests\\TicketingTests.csproj",
+        "packagesPath": "C:\\Users\\mkuczynski11\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\TicketingTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\mkuczynski11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj": {
+                "projectPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Akka.TestKit": {
+              "target": "Package",
+              "version": "[1.5.16, )"
+            },
+            "Akka.TestKit.Xunit2": {
+              "target": "Package",
+              "version": "[1.5.16, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.9.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.7.0, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.5.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
