@@ -51,12 +51,6 @@ namespace AkkaTicket.Actors
                 case ReservationCreated reservationCreatedMsg:
                     reservationIdToRservationActor.Add(reservationCreatedMsg.ReservationId, Sender);
                     break;
-                case ReservationCancelled reservationCancelledMsg:
-                    if (reservationIdToRservationActor.ContainsKey(reservationCancelledMsg.ReservationId))
-                    {
-                        reservationIdToRservationActor.Remove(reservationCancelledMsg.ReservationId);
-                    }
-                    break;
                 case ReadUserData readMsg when readMsg.Email.Equals(Email):
                     Sender.Tell(new UserData(readMsg.RequestId, Email));
                     break;

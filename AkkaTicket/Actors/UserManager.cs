@@ -59,10 +59,6 @@ namespace AkkaTicket.Actors
                     userActor = userEmailToActor[reservationCreatedMsg.Email];
                     userActor.Forward(reservationCreatedMsg);
                     break;
-                case ReservationCancelled reservationCancelledMsg:
-                    userActor = userEmailToActor[reservationCancelledMsg.Email];
-                    userActor.Forward(reservationCancelledMsg);
-                    break;
                 case ReadUserData readUserDataMsg:
                     if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out actorRef))
                     {
