@@ -32,6 +32,9 @@ namespace AkkaTicket.Actors
                     actorToEventId.Add(eventActor, eventId);
                     Sender.Tell(new RespondEventCreated(requestCreateEventMsg.RequestId, eventId));
                     break;
+                case RequestReadEvents requestReadEventsMsg:
+                    Context.ActorOf(EventQuery.Props(new Dictionary<IActorRef, string>(actorToEventId), requestReadEventsMsg.RequestId, Sender, TimeSpan.FromSeconds(1), new EventQuery.Parameters(requestReadEventsMsg.Name)));
+                    break;
                 case RequestReadEventData readEventDataMsg:
                     if (!eventIdToActor.TryGetValue(readEventDataMsg.EventId, out var actorRef))
                     {

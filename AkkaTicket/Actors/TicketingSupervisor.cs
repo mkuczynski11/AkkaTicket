@@ -31,6 +31,9 @@ namespace AkkaTicket.Actors
                 case RequestCreateEvent requestCreateEventMsg:
                     bookingManagerActor.Forward(requestCreateEventMsg);
                     break;
+                case RequestReadEvents requestReadEventsMsg:
+                    bookingManagerActor.Forward(requestReadEventsMsg);
+                    break;
                 case RequestReadEventData readEventDataMsg:
                     bookingManagerActor.Forward(readEventDataMsg);
                     break;

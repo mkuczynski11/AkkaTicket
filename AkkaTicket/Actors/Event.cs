@@ -61,8 +61,12 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
-                case RequestReadEventData readMsg when readMsg.EventId.Equals(this.Id):
+                case ReadEventData readMsg:
                     var availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
+                    Sender.Tell(new EventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
+                    break;
+                case RequestReadEventData readMsg when readMsg.EventId.Equals(this.Id):
+                    availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
                     Sender.Tell(new RespondEventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
                     break;
                 case RequestReadEventData readMsg:

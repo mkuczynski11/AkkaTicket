@@ -104,10 +104,13 @@ namespace AkkaTicket.Controllers
             return TypedResults.Ok();
         }
 
-        //public _ GetEvents()
-        //{
-
-        //}
+        [HttpGet("events")]
+        public async Task<Ok<GetEventsDataDTO>> GetEvents(string? name)
+        {
+            RespondEventsData response = await _bridge.Ask<RespondEventsData>(new RequestReadEvents(Guid.NewGuid().ToString(), name));
+            List<GetEventsDataDTO.EventDTO> events = response.Events.Select(x => new GetEventsDataDTO.EventDTO(x.Id, x.Name)).ToList();
+            return TypedResults.Ok(new GetEventsDataDTO(events));
+        }
 
         [HttpPost("events/{eventId}/seats/{seatId}")]
         public async Task<Results<NotFound<string>, BadRequest<string>, Created>> ReserveSeat([FromBody] CreateReservationDTO createReservationRequest, string eventId, string seatId)
