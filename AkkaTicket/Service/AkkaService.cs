@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using Akka.Configuration;
 using Akka.DependencyInjection;
 using AkkaTicket.Actors;
 using AkkaTicket.Connectors;
@@ -23,7 +24,38 @@ namespace AkkaTicket.Service
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var bootstrap = BootstrapSetup.Create();
+            var bootstrap = BootstrapSetup.Create().WithConfig(
+                ConfigurationFactory.ParseString(@"
+                akka {
+                  persistence {
+                    journal.plugin = ""akka.persistence.journal.postgresql""
+                    snapshot-store.plugin = ""akka.persistence.snapshot-store.postgresql""
+                  }
+                  persistence.journal.postgresql {
+                    class = ""Akka.Persistence.PostgreSql.Journal.PostgreSqlJournal, Akka.Persistence.PostgreSql""
+                    plugin-dispatcher = ""akka.actor.default-dispatcher""
+                    connection-string = ""Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=admin;""
+                    schema-name = public
+                    auto-initialize = on
+                    table-name = event_journal
+                  }
+                  persistence.snapshot-store.postgresql {
+                    class = ""Akka.Persistence.PostgreSql.Snapshot.PostgreSqlSnapshotStore, Akka.Persistence.PostgreSql""
+                    plugin-dispatcher = ""akka.actor.default-dispatcher""
+                    connection-string = ""Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=admin;""
+                    schema-name = public
+                    auto-initialize = on
+                    table-name = snapshot_store
+                  }
+                  persistence.query.journal.postgresql {
+                    # Configuration for the PostgreSQL read journal plugin
+                    class = ""Akka.Persistence.PostgreSql.Journal.PostgreSqlJournal, Akka.Persistence.PostgreSql""
+                    write-plugin = ""akka.persistence.journal.postgresql"" // Reference to the write journal plugin
+                    refresh-interval = 3s // Interval for polling for new events
+                    max-buffer-size = 50 // Maximum number of events to buffer
+                  }
+                }
+                "));
 
             // enable DI support inside this ActorSystem, if needed
             var diSetup = DependencyResolverSetup.Create(_serviceProvider);

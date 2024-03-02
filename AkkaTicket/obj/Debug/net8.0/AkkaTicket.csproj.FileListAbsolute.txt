@@ -45,3 +45,12 @@ C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\obj\Debug\n
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\obj\Debug\net8.0\AkkaTicket.genruntimeconfig.cache
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\obj\Debug\net8.0\ref\AkkaTicket.dll
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\obj\Debug\net8.0\AkkaTicket.sourcelink.json
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.PostgreSql.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.Sql.Common.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Google.Protobuf.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Npgsql.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.Query.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.Query.Sql.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Streams.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Reactive.Streams.dll

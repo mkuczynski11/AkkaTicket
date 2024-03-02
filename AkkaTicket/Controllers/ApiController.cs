@@ -9,6 +9,7 @@ using AkkaTicket.Shared.Messages.Reservation.Internal;
 using AkkaTicket.Shared.Messages.Event.Out;
 using AkkaTicket.Shared.Messages.Event.In;
 using AkkaTicket.Shared.Messages.User.In;
+using System.Xml.Linq;
 
 namespace AkkaTicket.Controllers
 {
@@ -159,4 +160,7 @@ namespace AkkaTicket.Controllers
             return TypedResults.Ok(new GetReservationDataDTO(dataResponse.ReservationId, dataResponse.Status, dataResponse.EventId, dataResponse.SeatId));
         }
     }
+    //Start postgres command
+    //docker run -p 5432:5432 --name container-postgresdb -e POSTGRES_PASSWORD = admin - d postgres
+    //docker run -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=admin@example.com" -e "PGADMIN_DEFAULT_PASSWORD=admin" -d dpage/pgadmin4
 }

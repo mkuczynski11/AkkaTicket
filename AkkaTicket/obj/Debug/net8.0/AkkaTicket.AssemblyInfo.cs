@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AkkaTicket")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ddbdef3972ffdd7b37e37f8e935766243f8c9b8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+92e1298198943f51c446706851175a2877fb11e1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AkkaTicket")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AkkaTicket")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

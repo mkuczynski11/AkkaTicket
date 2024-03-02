@@ -42,11 +42,31 @@
           "dependencies": {
             "Akka": {
               "target": "Package",
-              "version": "[1.5.16, )"
+              "version": "[1.5.17, )"
             },
             "Akka.DependencyInjection": {
               "target": "Package",
-              "version": "[1.5.16, )"
+              "version": "[1.5.17, )"
+            },
+            "Akka.Persistence": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
+            "Akka.Persistence.PostgreSql": {
+              "target": "Package",
+              "version": "[1.5.15.1, )"
+            },
+            "Akka.Persistence.Query": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
+            "Akka.Persistence.Query.Sql": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
+            "Akka.Persistence.Sql.Common": {
+              "target": "Package",
+              "version": "[1.5.17, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

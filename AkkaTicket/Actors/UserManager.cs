@@ -1,5 +1,11 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using Akka.Persistence.Journal;
+using Akka.Persistence.Query;
+using Akka.Persistence.Query.Sql;
+using Akka.Persistence.Sql.Common.Journal;
+using Akka.Streams;
+using Akka.Streams.Dsl;
 using AkkaTicket.Shared.Messages.Reservation.Internal;
 using AkkaTicket.Shared.Messages.User.In;
 using AkkaTicket.Shared.Messages.User.Internal;
@@ -7,13 +13,31 @@ using AkkaTicket.Shared.Messages.User.Out;
 
 namespace AkkaTicket.Actors
 {
-    public class UserManager: UntypedActor
+    public class UserManager : UntypedActor
     {
         private Dictionary<string, IActorRef> userEmailToActor = new();
         private Dictionary<IActorRef, string> actorToUserEmail = new();
-        public UserManager() { }
+        public UserManager()
+        {
+            var queries = PersistenceQuery.Get(Context.System).ReadJournalFor<SqlReadJournal>(SqlReadJournal.Identifier);
+            var source = queries.PersistenceIds();
+            var mat = ActorMaterializer.Create(Context.System);
+            source.RunForeach(id =>
+            {
+                Log.Info($"id:{id}");
+                var email = id.Replace("user-", "");
+                Log.Info($"email:{email}");
+                var userActor = Context.ActorOf(User.Props(email), id);
+                Context.Watch(userActor);
+                userEmailToActor.Add(email, userActor);
+                actorToUserEmail.Add(userActor, email);
+                userActor.Tell(new Restore());
+            }, mat);
+        }
         protected ILoggingAdapter Log { get; } = Context.GetLogger();
-        protected override void PreStart() => Log.Info($"UserManager started");
+        protected override void PreStart() {
+            Log.Info($"UserManager started");
+        }
         protected override void PostStop() => Log.Info($"UserManager stopped");
 
         protected override void OnReceive(object message)
@@ -31,11 +55,13 @@ namespace AkkaTicket.Actors
                     Log.Info($"Creating User actor for {createUserMsg.Email}");
                     var userActor = Context.ActorOf(User.Props(createUserMsg.Email, createUserMsg.Name, createUserMsg.Surname), $"user-{createUserMsg.Email}");
                     Context.Watch(userActor);
+                    userActor.Tell("initState");
                     userEmailToActor.Add(createUserMsg.Email, userActor);
                     actorToUserEmail.Add(userActor, createUserMsg.Email);
                     Sender.Tell(new RespondUserCreated(createUserMsg.RequestId, createUserMsg.Email));
                     break;
                 case RequestReadUserData readUserDataMsg:
+                    Log.Info($"{Context.GetChildren().ToList().Count}");
                     if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out actorRef))
                     {
                         Log.Warning($"User actor for {readUserDataMsg.Email} is not registered");
@@ -68,6 +94,10 @@ namespace AkkaTicket.Actors
                     }
 
                     actorRef.Forward(readUserDataMsg);
+                    break;
+                case Register registerMsg:
+                    userEmailToActor.Add(registerMsg.Email, registerMsg.ActorRef);
+                    actorToUserEmail.Add(registerMsg.ActorRef, registerMsg.Email);
                     break;
                 case Terminated t:
                     var userEmail = actorToUserEmail[t.ActorRef];
