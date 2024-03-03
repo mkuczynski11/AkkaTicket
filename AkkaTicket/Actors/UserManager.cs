@@ -61,7 +61,6 @@ namespace AkkaTicket.Actors
                     Sender.Tell(new RespondUserCreated(createUserMsg.RequestId, createUserMsg.Email));
                     break;
                 case RequestReadUserData readUserDataMsg:
-                    Log.Info($"{Context.GetChildren().ToList().Count}");
                     if (!userEmailToActor.TryGetValue(readUserDataMsg.Email, out actorRef))
                     {
                         Log.Warning($"User actor for {readUserDataMsg.Email} is not registered");

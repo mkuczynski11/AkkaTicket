@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using AkkaTicket.Shared;
 using AkkaTicket.Shared.Messages.Event.Internal;
 using AkkaTicket.Shared.Messages.Event.Out;
 using AkkaTicket.Shared.Messages.Other;
@@ -27,7 +28,7 @@ namespace AkkaTicket.Actors
         public IActorRef Requester { get; }
         public TimeSpan Timeout { get; }
         public Parameters Params { get; }
-
+        private static double ExternalCallSimulationFailProbability = 0.5f;
         protected override void PreStart()
         {
             foreach (var actor in ActorToEventId.Keys)
@@ -59,6 +60,13 @@ namespace AkkaTicket.Actors
                     case CollectionTimeout _:
                         var replies = new Dictionary<string, EventData>(repliesSoFar);
                         List<RespondEventsData.EventData> events = replies.Values.Select(x => new RespondEventsData.EventData(x.Id, x.Name)).ToList();
+                        // simulate external call
+                        Random rnd = new Random();
+                        if (rnd.NextDouble() < ExternalCallSimulationFailProbability)
+                        {
+                            Log.Info("EventQuery failed because of external call error");
+                            throw new NoConnectionException();
+                        }
                         Requester.Tell(new RespondEventsData(RequestId, events));
                         Context.Stop(Self);
                         break;
@@ -80,6 +88,13 @@ namespace AkkaTicket.Actors
             if (stillWaiting.Count == 0)
             {
                 List<RespondEventsData.EventData> events = repliesSoFar.Values.Select(x => new RespondEventsData.EventData(x.Id, x.Name)).ToList();
+                // simulate external call
+                Random rnd = new Random();
+                if (rnd.NextDouble() < ExternalCallSimulationFailProbability)
+                {
+                    Log.Info("EventQuery failed because of external call error");
+                    throw new NoConnectionException();
+                }
                 Requester.Tell(new RespondEventsData(RequestId, events));
             }
             else

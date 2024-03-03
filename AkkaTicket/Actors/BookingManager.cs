@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using AkkaTicket.Shared;
 using AkkaTicket.Shared.Messages.Event.In;
 using AkkaTicket.Shared.Messages.Event.Out;
 using AkkaTicket.Shared.Messages.Reservation.In;
@@ -19,6 +20,23 @@ namespace AkkaTicket.Actors
         protected override void PreStart() => Log.Info($"BookingManager started");
         protected override void PostStop() => Log.Info($"BookingManager stopped");
 
+        protected override SupervisorStrategy SupervisorStrategy()
+        {
+            return new OneForOneStrategy(
+                maxNrOfRetries: 10,
+                withinTimeRange: TimeSpan.FromMinutes(1),
+                localOnlyDecider: ex =>
+                {
+                    switch(ex)
+                    {
+                        case NoConnectionException nce:
+                            Log.Info("Restarting actor");
+                            return Directive.Restart;
+                        default:
+                            return Directive.Escalate;
+                    }
+                });
+        }
         protected override void OnReceive(object message)
         {
             switch (message)
@@ -33,7 +51,7 @@ namespace AkkaTicket.Actors
                     Sender.Tell(new RespondEventCreated(requestCreateEventMsg.RequestId, eventId));
                     break;
                 case RequestReadEvents requestReadEventsMsg:
-                    Context.ActorOf(EventQuery.Props(new Dictionary<IActorRef, string>(actorToEventId), requestReadEventsMsg.RequestId, Sender, TimeSpan.FromSeconds(1), new EventQuery.Parameters(requestReadEventsMsg.Name)));
+                    Context.ActorOf(EventQuery.Props(new Dictionary<IActorRef, string>(actorToEventId), requestReadEventsMsg.RequestId, Sender, TimeSpan.FromSeconds(1), new EventQuery.Parameters(requestReadEventsMsg.Name)), $"event-query-{requestReadEventsMsg.RequestId}");
                     break;
                 case RequestReadEventData readEventDataMsg:
                     if (!eventIdToActor.TryGetValue(readEventDataMsg.EventId, out var actorRef))
