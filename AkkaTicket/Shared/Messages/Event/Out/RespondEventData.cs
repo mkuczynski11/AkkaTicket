@@ -4,6 +4,16 @@ namespace AkkaTicket.Shared.Messages.Event.Out
 {
     public sealed class RespondEventData
     {
+        public class Seat
+        {
+            public Seat(string id, double price)
+            {
+                Id = id;
+                Price = price;
+            }
+            public string Id { get; set; }
+            public double Price { get; set; }
+        }
         public RespondEventData(string requestId, string id, string name, double duration, string location, DateTime date, string status, int seatsAmount, int availableSeatsAmount, List<Seat> seats)
         {
             RequestId = requestId;

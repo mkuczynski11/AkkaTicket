@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj": {}
+    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicketNoSeed\\AkkaTicket\\AkkaTicket.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj": {
+    "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicketNoSeed\\AkkaTicket\\AkkaTicket.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj",
+        "projectUniqueName": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicketNoSeed\\AkkaTicket\\AkkaTicket.csproj",
         "projectName": "AkkaTicket",
-        "projectPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\AkkaTicket.csproj",
+        "projectPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicketNoSeed\\AkkaTicket\\AkkaTicket.csproj",
         "packagesPath": "C:\\Users\\mkuczynski11\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicket\\AkkaTicket\\obj\\",
+        "outputPath": "C:\\Users\\mkuczynski11\\Desktop\\magisterka\\repos\\AkkaTicketNoSeed\\AkkaTicket\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mkuczynski11\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,6 +41,10 @@
           "targetAlias": "net8.0",
           "dependencies": {
             "Akka": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
+            "Akka.Cluster": {
               "target": "Package",
               "version": "[1.5.17, )"
             },
