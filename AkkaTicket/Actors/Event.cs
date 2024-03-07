@@ -4,6 +4,7 @@ using Akka.Util.Internal;
 using AkkaTicket.Shared.Messages.Event.In;
 using AkkaTicket.Shared.Messages.Event.Internal;
 using AkkaTicket.Shared.Messages.Event.Out;
+using AkkaTicket.Shared.Messages.Other;
 using AkkaTicket.Shared.Messages.Reservation.Internal;
 
 namespace AkkaTicket.Actors
@@ -57,7 +58,7 @@ namespace AkkaTicket.Actors
             Log.Info($"Event actor {Id}-{Name}-{Location}-{Date} stopped");
         }
 
-        protected override void OnReceive(object message)
+        protected override async void OnReceive(object message)
         {
             switch (message)
             {
@@ -67,7 +68,11 @@ namespace AkkaTicket.Actors
                     break;
                 case RequestReadEventData readMsg when readMsg.EventId.Equals(this.Id):
                     availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
-                    Sender.Tell(new RespondEventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
+                    var cheapestSeat = _seatList.Min(seat => seat.Price);
+                    var router = Context.System.ActorSelection("/user/currencyExchangeRouter");
+                    var sender = Sender;
+                    cheapestSeat = await router.Ask<double>(new ExchangeCurrency(readMsg.Currency, cheapestSeat));
+                    sender.Tell(new RespondEventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats, cheapestSeat));
                     break;
                 case RequestReadEventData readMsg:
                     Log.Warning($"Ignoring ReadEventData request for {readMsg.EventId}. This actor is responsible for {this.Id}");
@@ -78,8 +83,9 @@ namespace AkkaTicket.Actors
                     this.Location = requestChangeEventMsg.Location;
                     this.Date = requestChangeEventMsg.Date;
                     availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
+                    cheapestSeat = _seatList.Min(seat => seat.Price);
                     reservationActorToSeatId.Keys.ForEach(reservationActor => reservationActor.Tell(new EventChanged(requestChangeEventMsg.RequestId)));
-                    Sender.Tell(new RespondEventData(requestChangeEventMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
+                    Sender.Tell(new RespondEventData(requestChangeEventMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats, cheapestSeat));
                     break;
                 case RequestCancelEvent requestCancelEventMsg when requestCancelEventMsg.EventId.Equals(this.Id):
                     this.Status = EventStates.CANCELED;

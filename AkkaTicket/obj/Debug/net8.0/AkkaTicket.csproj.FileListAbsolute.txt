@@ -54,3 +54,11 @@ C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\n
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Persistence.Query.Sql.dll
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Streams.dll
 C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Reactive.Streams.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Cluster.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Coordination.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\Akka.Remote.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\DotNetty.Buffers.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\DotNetty.Codecs.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\DotNetty.Common.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\DotNetty.Handlers.dll
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\AkkaTicket\bin\Debug\net8.0\DotNetty.Transport.dll

@@ -62,16 +62,16 @@ namespace AkkaTicket.Controllers
         }
 
         [HttpGet("events/{id}")]
-        public async Task<Results<NotFound<string>, Ok<GetEventDataDTO>>> GetEvent(string id)
+        public async Task<Results<NotFound<string>, Ok<GetEventDataDTO>>> GetEvent(string id, string currency)
         {
-            var response = await _bridge.Ask<object>(new RequestReadEventData(Guid.NewGuid().ToString(), id));
+            var response = await _bridge.Ask<object>(new RequestReadEventData(Guid.NewGuid().ToString(), id, currency));
             if (response is RespondEventDoesNotExist)
             {
                 return TypedResults.NotFound("User does not exist");
             }
             RespondEventData dataResponse = (RespondEventData)response;
             var seatsData = dataResponse.Seats.Select(seat => new GetEventSeatDTO(seat.Id, seat.Price)).ToList();
-            return TypedResults.Ok(new GetEventDataDTO(dataResponse.Id, dataResponse.Name, dataResponse.Duration, dataResponse.Location, dataResponse.Date, dataResponse.Status, dataResponse.SeatsAmount, dataResponse.AvailableSeatsAmount, seatsData));
+            return TypedResults.Ok(new GetEventDataDTO(dataResponse.Id, dataResponse.Name, dataResponse.Duration, dataResponse.Location, dataResponse.Date, dataResponse.Status, dataResponse.SeatsAmount, dataResponse.AvailableSeatsAmount, seatsData, dataResponse.CheapestPrice));
         }
 
         [HttpPost("events")]

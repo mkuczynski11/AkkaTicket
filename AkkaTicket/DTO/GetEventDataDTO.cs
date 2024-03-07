@@ -3,7 +3,7 @@
     public sealed class GetEventDataDTO
     {
         public GetEventDataDTO(string id, string name, double duration, string location, DateTime date, string status, int seatsAmount, int availableSeatsAmount, List<GetEventSeatDTO
-            > seats)
+            > seats, double cheapestPrice)
         {
             Id = id;
             Name = name;
@@ -14,6 +14,7 @@
             AvailableSeatsAmount = availableSeatsAmount;
             EventSeats = seats;
             Status = status;
+            CheapestPrice = cheapestPrice;
         }
         public string Id { get; }
         public string Name { get; }
@@ -24,5 +25,6 @@
         public int SeatsAmount { get; }
         public int AvailableSeatsAmount { get; }
         public List<GetEventSeatDTO> EventSeats { get; }
+        public double CheapestPrice { get; }
     }
 }

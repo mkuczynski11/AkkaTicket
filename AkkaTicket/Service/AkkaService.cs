@@ -1,6 +1,8 @@
 ﻿using Akka.Actor;
+using Akka.Cluster.Routing;
 using Akka.Configuration;
 using Akka.DependencyInjection;
+using Akka.Routing;
 using AkkaTicket.Actors;
 using AkkaTicket.Connectors;
 
@@ -27,6 +29,16 @@ namespace AkkaTicket.Service
             var bootstrap = BootstrapSetup.Create().WithConfig(
                 ConfigurationFactory.ParseString(@"
                 akka {
+                  actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+                  remote {
+                    dot-netty.tcp {
+                      port = 8081
+                      hostname = localhost
+                    }
+                  }
+                  cluster {
+                    seed-nodes= [""akka.tcp://ticketing@localhost:8081""]
+                  }
                   persistence {
                     journal.plugin = ""akka.persistence.journal.postgresql""
                     snapshot-store.plugin = ""akka.persistence.snapshot-store.postgresql""
@@ -67,6 +79,10 @@ namespace AkkaTicket.Service
             _actorSystem = ActorSystem.Create("ticketing", actorSystemSetup);
 
             _actorRef = _actorSystem.ActorOf(TicketingSupervisor.Props(), "ticketing");
+
+            var routerProps = new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(6, 2, true)).Props(CurrencyExchange.Props());
+
+            var router = _actorSystem.ActorOf(routerProps, "currencyExchangeRouter");
 
             // add a continuation task that will guarantee shutdown of application if ActorSystem terminates
             //await _actorSystem.WhenTerminated.ContinueWith(tr => {

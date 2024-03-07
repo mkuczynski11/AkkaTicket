@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[1.5.17, )"
             },
+            "Akka.Cluster": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
             "Akka.DependencyInjection": {
               "target": "Package",
               "version": "[1.5.17, )"
