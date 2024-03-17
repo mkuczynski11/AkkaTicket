@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Cluster.Routing;
+using Akka.Cluster.Sharding;
 using Akka.Configuration;
 using Akka.DependencyInjection;
 using Akka.Routing;
@@ -75,10 +76,17 @@ namespace AkkaTicket.Service
             // merge this setup (and any others) together into ActorSystemSetup
             var actorSystemSetup = bootstrap.And(diSetup);
 
+
             // start ActorSystem
             _actorSystem = ActorSystem.Create("ticketing", actorSystemSetup);
 
-            _actorRef = _actorSystem.ActorOf(TicketingSupervisor.Props(), "ticketing");
+            var region = ClusterSharding.Get(_actorSystem).Start(
+                typeName: typeof(User).Name,
+                entityPropsFactory: s => Props.Create(() => new User(s)),
+                settings: ClusterShardingSettings.Create(_actorSystem),
+                messageExtractor: new MessageExtractor());
+
+            _actorRef = _actorSystem.ActorOf(TicketingSupervisor.Props(region), "ticketing");
 
             var routerProps = new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(6, 2, true)).Props(CurrencyExchange.Props());
 
@@ -111,6 +119,29 @@ namespace AkkaTicket.Service
         public Task<T> Ask<T>(object message)
         {
             return _actorRef.Ask<T>(message);
+        }
+
+        public sealed class MessageExtractor : IMessageExtractor
+        {
+            public string? EntityId(object message)
+            {
+                return (message as dynamic)?.EntityId.ToString();
+            }
+
+            public object? EntityMessage(object message)
+            {
+                return message;
+            }
+
+            public string? ShardId(object message)
+            {
+                return ShardId((message as dynamic)?.EntityId.ToString());
+            }
+
+            public string ShardId(string entityId, object? messageHint = null)
+            {
+                return entityId.GetHashCode().ToString();
+            }
         }
     }
 }
