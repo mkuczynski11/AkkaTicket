@@ -63,16 +63,12 @@ namespace AkkaTicket.Actors
             _state = _state.Updated(evt);
         }
         private Dictionary<string, IActorRef> reservationIdToRservationActor = new();
+        private bool IsInitialized = false;
 
         public User(string email)
         {
             PersistenceId = $"user-{email}";
             _state = new UserState(email, "", "");
-        }
-        public User(string email, string name, string surname)
-        {
-            PersistenceId = $"user-{email}";
-            _state = new UserState(email, name, surname);
         }
 
         protected ILoggingAdapter Log { get; } = Context.GetLogger();
@@ -92,6 +88,7 @@ namespace AkkaTicket.Actors
             switch (message)
             {
                 case InitialUserInfo evt:
+                    IsInitialized = true;
                     UpdateState(evt);
                     break;
                 case UserInfoUpdate evt:
@@ -107,33 +104,63 @@ namespace AkkaTicket.Actors
         {
             switch (message)
             {
+                case Initialize initializeMsg:
+                    if (IsInitialized)
+                    {
+                        Sender.Tell(false);
+                        break;
+                    }
+                    Persist(new InitialUserInfo(initializeMsg.EntityId, initializeMsg.Name, initializeMsg.Surname), UpdateState);
+                    IsInitialized = true;
+                    Sender.Tell(true);
+                    break;
                 case RequestReadUserData readMsg when readMsg.Email.Equals(_state.Email):
+                    if (!IsInitialized)
+                    {
+                        Log.Warning($"User actor for {readMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(readMsg.RequestId));
+                        break;
+                    }
                     Sender.Tell(new RespondUserData(readMsg.RequestId, _state.Email, _state.Name, _state.Surname, reservationIdToRservationActor.Keys.ToList()));
                     break;
                 case RequestReadUserData readMsg:
                     Log.Warning($"Ignoring ReadUserData request for {readMsg.Email}. This actor is responsible for {_state.Email}");
                     break;
                 case RequestChangeUser requestChangeUserMsg when requestChangeUserMsg.Email.Equals(_state.Email):
+                    if (!IsInitialized)
+                    {
+                        Log.Warning($"User actor for {requestChangeUserMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(requestChangeUserMsg.RequestId));
+                        break;
+                    }
                     Persist(new UserInfoUpdate(requestChangeUserMsg.Name, requestChangeUserMsg.Surname), UpdateState);
                     Sender.Tell(new RespondUserData(requestChangeUserMsg.RequestId, _state.Email, _state.Name, _state.Surname, reservationIdToRservationActor.Keys.ToList()));
                     break;
                 case ReservationCreated reservationCreatedMsg:
+                    if (!IsInitialized)
+                    {
+                        Log.Warning($"User actor for {reservationCreatedMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(reservationCreatedMsg.RequestId));
+                        break;
+                    }
                     reservationIdToRservationActor.Add(reservationCreatedMsg.ReservationId, Sender);
                     break;
                 case ReadUserData readMsg when readMsg.Email.Equals(_state.Email):
+                    if (!IsInitialized)
+                    {
+                        Log.Warning($"User actor for {readMsg.Email} is not registered");
+                        Sender.Tell(new RespondUserDoesNotExist(readMsg.RequestId));
+                        break;
+                    }
                     Sender.Tell(new UserData(readMsg.RequestId, _state.Email));
                     break;
                 case "snap":
                     SaveSnapshot(_state);
                     break;
-                case "initState":
-                    Persist(new InitialUserInfo(_state.Email, _state.Name, _state.Surname), UpdateState);
-                    break;
             }
         }
 
         public override string PersistenceId { get; }
-        public static Props Props(string email, string name,string surname) => Akka.Actor.Props.Create(() => new  User(email, name, surname));
         public static Props Props(string email) => Akka.Actor.Props.Create(() => new User(email));
     }
 }

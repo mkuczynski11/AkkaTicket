@@ -6,8 +6,9 @@
         {
             RequestId = requestId;
             Email = email;
+            EntityId = email;
         }
-
+        public string EntityId { get; }
         public string RequestId { get; }
         public string Email { get; }
     }

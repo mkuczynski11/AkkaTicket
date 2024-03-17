@@ -10,11 +10,14 @@ namespace AkkaTicket.Actors
     public class TicketingSupervisor : UntypedActor
     {
         public ILoggingAdapter Log { get; } = Context.GetLogger();
-        IActorRef userManagerActor = Context.ActorOf(UserManager.Props(), "userManager");
+        IActorRef userManagerActor;
         IActorRef bookingManagerActor = Context.ActorOf(BookingManager.Props(), "bookingManager");
+        public TicketingSupervisor(IActorRef shardRegion)
+        {
+            userManagerActor = Context.ActorOf(UserManager.Props(shardRegion), "userManager");
+        }
         protected override void PreStart() => Log.Info("Ticketing Application started");
         protected override void PostStop() => Log.Info("Ticketing Application stopped");
-
         protected override void OnReceive(object message)
         {
             switch (message)
@@ -54,6 +57,6 @@ namespace AkkaTicket.Actors
                     break;
             }
         }
-        public static Props Props() => Akka.Actor.Props.Create<TicketingSupervisor>();
+        public static Props Props(IActorRef shardRegion) => Akka.Actor.Props.Create<TicketingSupervisor>(() => new TicketingSupervisor(shardRegion));
     }
 }
