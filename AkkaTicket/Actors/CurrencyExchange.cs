@@ -6,6 +6,7 @@ namespace AkkaTicket.Actors
 {
     public class CurrencyExchange : UntypedActor
     {
+        private static bool ShouldDelay = true;
         public CurrencyExchange() { }
         protected ILoggingAdapter Log { get; } = Context.GetLogger();
         protected override void PreStart()
@@ -33,13 +34,19 @@ namespace AkkaTicket.Actors
             }
         }
 
-        protected override void OnReceive(object message)
+        protected override async void OnReceive(object message)
         {
             switch (message)
             {
                 case ExchangeCurrency exchangeCurrency:
+                    var sender = Sender;
+                    if (ShouldDelay)
+                    {
+                        Log.Info("Delaying exchange");
+                        await Task.Delay(5000);
+                    }
                     Log.Info($"Resolving currency for {exchangeCurrency.Amount}: {exchangeCurrency.Currency}");
-                    Sender.Tell(exchangeCurrency.Amount * CurrencyRate(exchangeCurrency.Currency));
+                    sender.Tell(exchangeCurrency.Amount * CurrencyRate(exchangeCurrency.Currency));
                     break;
             }
         }

@@ -35,6 +35,8 @@ namespace AkkaTicket.Actors
         private List<Seat> _seatList = new();
         private Dictionary<string, IActorRef> seatIdToReservationActor = new();
         private Dictionary<IActorRef, string> reservationActorToSeatId = new();
+        private static int FetchSimulationDelayMs = 2000;
+        private static double FetchSimulationProbability = 0.1f;
         public Event(string id, string name, double duration, string location, DateTime date, List<CreateSeatData> seats)
         {
             Id = id;
@@ -64,13 +66,19 @@ namespace AkkaTicket.Actors
             {
                 case ReadEventData readMsg:
                     var availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
-                    Sender.Tell(new EventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
+                    var sender = Sender;
+                    Random rnd = new Random();
+                    if (rnd.NextDouble() < FetchSimulationProbability)
+                    {
+                        await Task.Delay(FetchSimulationDelayMs);
+                    }
+                    sender.Tell(new EventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats));
                     break;
                 case RequestReadEventData readMsg when readMsg.EventId.Equals(this.Id):
                     availableSeats = _seatList.Where(seat => !seatIdToReservationActor.ContainsKey(seat.Id)).ToList();
                     var cheapestSeat = _seatList.Min(seat => seat.Price);
                     var router = Context.System.ActorSelection("/user/currencyExchangeRouter");
-                    var sender = Sender;
+                    sender = Sender;
                     cheapestSeat = await router.Ask<double>(new ExchangeCurrency(readMsg.Currency, cheapestSeat));
                     sender.Tell(new RespondEventData(readMsg.RequestId, Id, Name, Duration, Location, Date, Status, _seatList.Count, availableSeats.Count(), availableSeats, cheapestSeat));
                     break;

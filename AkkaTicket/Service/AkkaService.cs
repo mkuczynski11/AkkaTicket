@@ -90,7 +90,7 @@ namespace AkkaTicket.Service
 
             _actorRef = _actorSystem.ActorOf(TicketingSupervisor.Props(region), "ticketing");
 
-            var routerProps = new ClusterRouterPool(new RoundRobinPool(5), new ClusterRouterPoolSettings(6, 2, true)).Props(CurrencyExchange.Props());
+            var routerProps = new ClusterRouterPool(new RoundRobinPool(3), new ClusterRouterPoolSettings(6, 2, true)).Props(CurrencyExchange.Props());
 
             var router = _actorSystem.ActorOf(routerProps, "currencyExchangeRouter");
 

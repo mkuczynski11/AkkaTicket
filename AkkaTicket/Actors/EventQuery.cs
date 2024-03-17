@@ -77,10 +77,13 @@ namespace AkkaTicket.Actors
         public void ReceivedResponse(IActorRef eventActor, EventData? response, HashSet<IActorRef> stillWaiting, Dictionary<string, EventData> repliesSoFar)
         {
             Context.Unwatch(eventActor);
-            var eventId = ActorToEventId[eventActor];
-            stillWaiting.Remove(eventActor);
+            ActorToEventId.TryGetValue(eventActor, out var eventId);
+            if (eventId != null)
+            {
+                stillWaiting.Remove(eventActor);
+            }
 
-            if (response != null && checkParameters(response))
+            if (response != null && checkParameters(response) && eventId != null)
             {
                 repliesSoFar.Add(eventId, response);
             }
