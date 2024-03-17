@@ -32,7 +32,7 @@ namespace AkkaTicket.Service
                   actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
                   remote {
                     dot-netty.tcp {
-                      port = 8081
+                      port = 0
                       hostname = localhost
                     }
                   }
