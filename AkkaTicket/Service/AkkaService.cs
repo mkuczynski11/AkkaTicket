@@ -6,6 +6,8 @@ using Akka.DependencyInjection;
 using Akka.Routing;
 using AkkaTicket.Actors;
 using AkkaTicket.Connectors;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AkkaTicket.Service
 {
@@ -84,7 +86,7 @@ namespace AkkaTicket.Service
                 typeName: typeof(User).Name,
                 entityPropsFactory: s => Props.Create(() => new User(s)),
                 settings: ClusterShardingSettings.Create(_actorSystem),
-                messageExtractor: new MessageExtractor());
+                messageExtractor: new MessageExtractor(2));
 
             _actorRef = _actorSystem.ActorOf(TicketingSupervisor.Props(region), "ticketing");
 
@@ -123,6 +125,11 @@ namespace AkkaTicket.Service
 
         public sealed class MessageExtractor : IMessageExtractor
         {
+            private readonly int _numberOfShards;
+            public MessageExtractor(int numberOfShards)
+            {
+                _numberOfShards = numberOfShards;
+            }
             public string? EntityId(object message)
             {
                 return (message as dynamic)?.EntityId.ToString();
@@ -135,12 +142,33 @@ namespace AkkaTicket.Service
 
             public string? ShardId(object message)
             {
-                return ShardId((message as dynamic)?.EntityId.ToString());
+                var entityId = this.EntityId(message);
+                if (entityId == null) return "0"; // Fallback, should handle more gracefully
+                var shardId = Math.Abs(GetHashCode(entityId)) % _numberOfShards;
+                return shardId.ToString();
             }
 
             public string ShardId(string entityId, object? messageHint = null)
             {
-                return entityId.GetHashCode().ToString();
+                if (entityId == null) return "0"; // Fallback, should handle more gracefully
+
+                // Same hashing as above
+                var shardId = Math.Abs(GetHashCode(entityId)) % _numberOfShards;
+                return shardId.ToString();
+            }
+
+            private int GetHashCode(string data)
+            {
+                using (SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider())
+                {
+                    byte[] inputBytes = Encoding.UTF8.GetBytes(data);
+                    byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+                    // Convert the first 4 bytes of the hash to an int
+                    int hash = BitConverter.ToInt32(hashBytes, 0);
+
+                    return hash;
+                }
             }
         }
     }
