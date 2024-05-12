@@ -5,7 +5,6 @@ using AkkaTicket.Shared.Messages.Event.Internal;
 using AkkaTicket.Shared.Messages.Reservation.In;
 using AkkaTicket.Shared.Messages.Reservation.Internal;
 using AkkaTicket.Shared.Messages.Reservation.Out;
-using AkkaTicket.Shared.Messages.User.In;
 using AkkaTicket.Shared.Messages.User.Internal;
 using AkkaTicket.Shared.Messages.User.Out;
 

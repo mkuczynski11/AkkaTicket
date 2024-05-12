@@ -1,0 +1,132 @@
+Running specs for TicketingTests.dll [C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\bin\Debug\net8.0\TicketingTests.dll] 
+[DEBUG][05.12.2024 12:51:25.939Z][Thread 0004][EventStream(CancelReservationSpec)] Logger log2-TestEventListener [Akka.TestKit.TestEventListener] started
+[INFO][05.12.2024 12:51:25.945Z][Thread 0009][remoting (akka://CancelReservationSpec)] Starting remoting
+[DEBUG][05.12.2024 12:51:25.951Z][Thread 0004][remoting (akka://CancelReservationSpec)] Starting prune timer for endpoint manager...
+[INFO][05.12.2024 12:51:26.266Z][Thread 0009][remoting (akka://CancelReservationSpec)] Remoting started; listening on addresses : [akka.tcp://CancelReservationSpec@localhost:62170]
+[INFO][05.12.2024 12:51:26.267Z][Thread 0009][remoting (akka://CancelReservationSpec)] Remoting now listens on addresses: [akka.tcp://CancelReservationSpec@localhost:62170]
+[WARNING][05.12.2024 12:51:26.278Z][Thread 0009][Cluster (akka://CancelReservationSpec)] The `auto-down-unreachable-after` feature has been deprecated as of Akka.NET v1.5.2 and will be removed in a future version of Akka.NET. The `keep-majority` split brain resolver will be used instead. See https://getakka.net/articles/cluster/split-brain-resolver.html for more details.
+[INFO][05.12.2024 12:51:26.279Z][Thread 0009][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62170] - Starting up...
+[INFO][05.12.2024 12:51:26.289Z][Thread 0009][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62170] - Started up successfully
+[INFO][05.12.2024 12:51:26.293Z][Thread 0013][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62170] - No seed-nodes configured, manual cluster join required
+[DEBUG][05.12.2024 12:51:26.322Z][Thread 0014][PlayerHandler (akka://CancelReservationSpec)] Connecting...
+[DEBUG][05.12.2024 12:51:26.336Z][Thread 0029][PlayerHandler (akka://CancelReservationSpec)] connected to [::1]:62166
+[DEBUG][05.12.2024 12:51:26.337Z][Thread 0017][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.ClientFSM+Connected>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state Connecting
+[DEBUG][05.12.2024 12:51:26.340Z][Thread 0017][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] transition Connecting, Akka.Remote.TestKit.ClientFSM+Data -> AwaitDone, Akka.Remote.TestKit.ClientFSM+Data
+[DEBUG][05.12.2024 12:51:26.432Z][Thread 0029][PlayerHandler (akka://CancelReservationSpec)] message from [::1]:62166, Akka.Remote.TestKit.Done
+[DEBUG][05.12.2024 12:51:26.432Z][Thread 0016][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.Done>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state AwaitDone
+[DEBUG][05.12.2024 12:51:26.432Z][Thread 0016][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] received Done: starting test
+[DEBUG][05.12.2024 12:51:26.432Z][Thread 0016][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] transition AwaitDone, Akka.Remote.TestKit.ClientFSM+Data -> Connected, Akka.Remote.TestKit.ClientFSM+Data
+[INFO][05.12.2024 12:51:26.434Z][Thread 0009][CancelReservationSpec (akka://CancelReservationSpec)] Role [seed2] started with address [akka.tcp://CancelReservationSpec@localhost:62170]
+[DEBUG][05.12.2024 12:51:26.438Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] processing Event: <<Terminated>: [akka://CancelReservationSpec/user/$a#2130047723] - ExistenceConfirmed=True>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/user/$a#2130047723] in state Connected
+[WARNING][05.12.2024 12:51:26.439Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] unhandled event <Terminated>: [akka://CancelReservationSpec/user/$a#2130047723] - ExistenceConfirmed=True in state Connected
+---------------DISPOSING--------------------
+[DEBUG][05.12.2024 12:51:26.442Z][Thread 0009][ActorSystem(CancelReservationSpec)] System shutdown initiated
+[INFO][05.12.2024 12:51:26.444Z][Thread 0018][akka.tcp://CancelReservationSpec@localhost:62170/user/TestConductorClient] Terminating connection to multi-node test controller due to [Akka.Actor.FSMBase+Shutdown]
+[INFO][05.12.2024 12:51:26.445Z][Thread 0029][PlayerHandler (akka://CancelReservationSpec)] Client: disconnecting [::1]:62171 from [::1]:62166
+[INFO][05.12.2024 12:51:26.447Z][Thread 0006][remoting-terminator] Shutting down remote daemon.
+[DEBUG][05.12.2024 12:51:26.447Z][Thread 0029][PlayerHandler (akka://CancelReservationSpec)] disconnected from [::1]:62166
+[INFO][05.12.2024 12:51:26.448Z][Thread 0006][remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO][05.12.2024 12:51:26.458Z][Thread 0008][remoting (akka://CancelReservationSpec)] Remoting shut down
+[INFO][05.12.2024 12:51:26.458Z][Thread 0008][remoting-terminator] Remoting shut down.
+[DEBUG][05.12.2024 12:51:26.459Z][Thread 0006][EventStream] Shutting down: StandardOutLogger started
+
+[Node2:seed2][PASS] TicketingTests.CancelReservationSpec.CancelReservationSpecs
+Running specs for TicketingTests.dll [C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\bin\Debug\net8.0\TicketingTests.dll] 
+[DEBUG][05.12.2024 12:55:24.821Z][Thread 0011][EventStream(CancelReservationSpec)] Logger log2-TestEventListener [Akka.TestKit.TestEventListener] started
+[INFO][05.12.2024 12:55:24.827Z][Thread 0008][remoting (akka://CancelReservationSpec)] Starting remoting
+[DEBUG][05.12.2024 12:55:24.833Z][Thread 0007][remoting (akka://CancelReservationSpec)] Starting prune timer for endpoint manager...
+[INFO][05.12.2024 12:55:25.123Z][Thread 0008][remoting (akka://CancelReservationSpec)] Remoting started; listening on addresses : [akka.tcp://CancelReservationSpec@localhost:62307]
+[INFO][05.12.2024 12:55:25.124Z][Thread 0008][remoting (akka://CancelReservationSpec)] Remoting now listens on addresses: [akka.tcp://CancelReservationSpec@localhost:62307]
+[WARNING][05.12.2024 12:55:25.137Z][Thread 0008][Cluster (akka://CancelReservationSpec)] The `auto-down-unreachable-after` feature has been deprecated as of Akka.NET v1.5.2 and will be removed in a future version of Akka.NET. The `keep-majority` split brain resolver will be used instead. See https://getakka.net/articles/cluster/split-brain-resolver.html for more details.
+[INFO][05.12.2024 12:55:25.137Z][Thread 0008][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62307] - Starting up...
+[INFO][05.12.2024 12:55:25.147Z][Thread 0008][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62307] - Started up successfully
+[INFO][05.12.2024 12:55:25.151Z][Thread 0020][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62307] - No seed-nodes configured, manual cluster join required
+[DEBUG][05.12.2024 12:55:25.178Z][Thread 0016][PlayerHandler (akka://CancelReservationSpec)] Connecting...
+[DEBUG][05.12.2024 12:55:25.188Z][Thread 0028][PlayerHandler (akka://CancelReservationSpec)] connected to [::1]:62303
+[DEBUG][05.12.2024 12:55:25.189Z][Thread 0019][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.ClientFSM+Connected>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state Connecting
+[DEBUG][05.12.2024 12:55:25.192Z][Thread 0019][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] transition Connecting, Akka.Remote.TestKit.ClientFSM+Data -> AwaitDone, Akka.Remote.TestKit.ClientFSM+Data
+[DEBUG][05.12.2024 12:55:25.267Z][Thread 0028][PlayerHandler (akka://CancelReservationSpec)] message from [::1]:62303, Akka.Remote.TestKit.Done
+[DEBUG][05.12.2024 12:55:25.267Z][Thread 0021][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.Done>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state AwaitDone
+[DEBUG][05.12.2024 12:55:25.268Z][Thread 0021][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] received Done: starting test
+[DEBUG][05.12.2024 12:55:25.268Z][Thread 0021][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] transition AwaitDone, Akka.Remote.TestKit.ClientFSM+Data -> Connected, Akka.Remote.TestKit.ClientFSM+Data
+[INFO][05.12.2024 12:55:25.269Z][Thread 0008][CancelReservationSpec (akka://CancelReservationSpec)] Role [seed2] started with address [akka.tcp://CancelReservationSpec@localhost:62307]
+[DEBUG][05.12.2024 12:55:25.274Z][Thread 0018][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] processing Event: <<Terminated>: [akka://CancelReservationSpec/user/$a#1385644024] - ExistenceConfirmed=True>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/user/$a#1385644024] in state Connected
+---------------DISPOSING--------------------
+[WARNING][05.12.2024 12:55:25.275Z][Thread 0018][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] unhandled event <Terminated>: [akka://CancelReservationSpec/user/$a#1385644024] - ExistenceConfirmed=True in state Connected
+[DEBUG][05.12.2024 12:55:25.276Z][Thread 0008][ActorSystem(CancelReservationSpec)] System shutdown initiated
+[INFO][05.12.2024 12:55:25.278Z][Thread 0017][akka.tcp://CancelReservationSpec@localhost:62307/user/TestConductorClient] Terminating connection to multi-node test controller due to [Akka.Actor.FSMBase+Shutdown]
+[INFO][05.12.2024 12:55:25.279Z][Thread 0028][PlayerHandler (akka://CancelReservationSpec)] Client: disconnecting [::1]:62309 from [::1]:62303
+[INFO][05.12.2024 12:55:25.282Z][Thread 0004][remoting-terminator] Shutting down remote daemon.
+[DEBUG][05.12.2024 12:55:25.282Z][Thread 0028][PlayerHandler (akka://CancelReservationSpec)] disconnected from [::1]:62303
+[INFO][05.12.2024 12:55:25.283Z][Thread 0004][remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO][05.12.2024 12:55:25.294Z][Thread 0030][remoting (akka://CancelReservationSpec)] Remoting shut down
+[INFO][05.12.2024 12:55:25.294Z][Thread 0030][remoting-terminator] Remoting shut down.
+[DEBUG][05.12.2024 12:55:25.295Z][Thread 0007][EventStream] Shutting down: StandardOutLogger started
+
+[Node2:seed2][PASS] TicketingTests.CancelReservationSpec.CancelReservationSpecs
+Running specs for TicketingTests.dll [C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\bin\Debug\net8.0\TicketingTests.dll] 
+[DEBUG][05.12.2024 12:55:53.891Z][Thread 0005][EventStream(CancelReservationSpec)] Logger log2-TestEventListener [Akka.TestKit.TestEventListener] started
+[INFO][05.12.2024 12:55:53.899Z][Thread 0007][remoting (akka://CancelReservationSpec)] Starting remoting
+[DEBUG][05.12.2024 12:55:53.905Z][Thread 0008][remoting (akka://CancelReservationSpec)] Starting prune timer for endpoint manager...
+[INFO][05.12.2024 12:55:54.181Z][Thread 0007][remoting (akka://CancelReservationSpec)] Remoting started; listening on addresses : [akka.tcp://CancelReservationSpec@localhost:62346]
+[INFO][05.12.2024 12:55:54.182Z][Thread 0007][remoting (akka://CancelReservationSpec)] Remoting now listens on addresses: [akka.tcp://CancelReservationSpec@localhost:62346]
+[WARNING][05.12.2024 12:55:54.194Z][Thread 0007][Cluster (akka://CancelReservationSpec)] The `auto-down-unreachable-after` feature has been deprecated as of Akka.NET v1.5.2 and will be removed in a future version of Akka.NET. The `keep-majority` split brain resolver will be used instead. See https://getakka.net/articles/cluster/split-brain-resolver.html for more details.
+[INFO][05.12.2024 12:55:54.195Z][Thread 0007][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62346] - Starting up...
+[INFO][05.12.2024 12:55:54.208Z][Thread 0007][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62346] - Started up successfully
+[INFO][05.12.2024 12:55:54.213Z][Thread 0019][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62346] - No seed-nodes configured, manual cluster join required
+[DEBUG][05.12.2024 12:55:54.247Z][Thread 0021][PlayerHandler (akka://CancelReservationSpec)] Connecting...
+[DEBUG][05.12.2024 12:55:54.259Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] connected to [::1]:62343
+[DEBUG][05.12.2024 12:55:54.261Z][Thread 0015][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.ClientFSM+Connected>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state Connecting
+[DEBUG][05.12.2024 12:55:54.265Z][Thread 0015][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] transition Connecting, Akka.Remote.TestKit.ClientFSM+Data -> AwaitDone, Akka.Remote.TestKit.ClientFSM+Data
+[DEBUG][05.12.2024 12:55:54.360Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] message from [::1]:62343, Akka.Remote.TestKit.Done
+[DEBUG][05.12.2024 12:55:54.360Z][Thread 0022][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.Done>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state AwaitDone
+[DEBUG][05.12.2024 12:55:54.360Z][Thread 0022][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] received Done: starting test
+[DEBUG][05.12.2024 12:55:54.360Z][Thread 0022][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] transition AwaitDone, Akka.Remote.TestKit.ClientFSM+Data -> Connected, Akka.Remote.TestKit.ClientFSM+Data
+[INFO][05.12.2024 12:55:54.362Z][Thread 0007][CancelReservationSpec (akka://CancelReservationSpec)] Role [seed2] started with address [akka.tcp://CancelReservationSpec@localhost:62346]
+[DEBUG][05.12.2024 12:55:54.367Z][Thread 0014][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] processing Event: <<Terminated>: [akka://CancelReservationSpec/user/$a#1073842661] - ExistenceConfirmed=True>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/user/$a#1073842661] in state Connected
+[WARNING][05.12.2024 12:55:54.368Z][Thread 0014][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] unhandled event <Terminated>: [akka://CancelReservationSpec/user/$a#1073842661] - ExistenceConfirmed=True in state Connected
+---------------DISPOSING--------------------
+[DEBUG][05.12.2024 12:55:54.370Z][Thread 0007][ActorSystem(CancelReservationSpec)] System shutdown initiated
+[INFO][05.12.2024 12:55:54.372Z][Thread 0020][akka.tcp://CancelReservationSpec@localhost:62346/user/TestConductorClient] Terminating connection to multi-node test controller due to [Akka.Actor.FSMBase+Shutdown]
+[INFO][05.12.2024 12:55:54.373Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] Client: disconnecting [::1]:62349 from [::1]:62343
+[INFO][05.12.2024 12:55:54.375Z][Thread 0012][remoting-terminator] Shutting down remote daemon.
+[DEBUG][05.12.2024 12:55:54.376Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] disconnected from [::1]:62343
+[INFO][05.12.2024 12:55:54.376Z][Thread 0012][remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO][05.12.2024 12:55:54.388Z][Thread 0009][remoting (akka://CancelReservationSpec)] Remoting shut down
+[INFO][05.12.2024 12:55:54.388Z][Thread 0009][remoting-terminator] Remoting shut down.
+[DEBUG][05.12.2024 12:55:54.389Z][Thread 0008][EventStream] Shutting down: StandardOutLogger started
+
+[Node2:seed2][PASS] TicketingTests.CancelReservationSpec.CancelReservationSpecs
+Running specs for TicketingTests.dll [C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\bin\Debug\net8.0\TicketingTests.dll] 
+[DEBUG][05.12.2024 12:56:17.569Z][Thread 0009][EventStream(CancelReservationSpec)] Logger log2-TestEventListener [Akka.TestKit.TestEventListener] started
+[INFO][05.12.2024 12:56:17.578Z][Thread 0005][remoting (akka://CancelReservationSpec)] Starting remoting
+[DEBUG][05.12.2024 12:56:17.585Z][Thread 0007][remoting (akka://CancelReservationSpec)] Starting prune timer for endpoint manager...
+[INFO][05.12.2024 12:56:17.957Z][Thread 0005][remoting (akka://CancelReservationSpec)] Remoting started; listening on addresses : [akka.tcp://CancelReservationSpec@localhost:62371]
+[INFO][05.12.2024 12:56:17.959Z][Thread 0005][remoting (akka://CancelReservationSpec)] Remoting now listens on addresses: [akka.tcp://CancelReservationSpec@localhost:62371]
+[WARNING][05.12.2024 12:56:17.972Z][Thread 0005][Cluster (akka://CancelReservationSpec)] The `auto-down-unreachable-after` feature has been deprecated as of Akka.NET v1.5.2 and will be removed in a future version of Akka.NET. The `keep-majority` split brain resolver will be used instead. See https://getakka.net/articles/cluster/split-brain-resolver.html for more details.
+[INFO][05.12.2024 12:56:17.973Z][Thread 0005][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62371] - Starting up...
+[INFO][05.12.2024 12:56:17.985Z][Thread 0005][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62371] - Started up successfully
+[INFO][05.12.2024 12:56:17.991Z][Thread 0012][Cluster (akka://CancelReservationSpec)] Cluster Node [akka.tcp://CancelReservationSpec@localhost:62371] - No seed-nodes configured, manual cluster join required
+[DEBUG][05.12.2024 12:56:18.022Z][Thread 0019][PlayerHandler (akka://CancelReservationSpec)] Connecting...
+[DEBUG][05.12.2024 12:56:18.034Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] connected to [::1]:62366
+[DEBUG][05.12.2024 12:56:18.036Z][Thread 0021][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.ClientFSM+Connected>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state Connecting
+[DEBUG][05.12.2024 12:56:18.039Z][Thread 0021][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] transition Connecting, Akka.Remote.TestKit.ClientFSM+Data -> AwaitDone, Akka.Remote.TestKit.ClientFSM+Data
+[DEBUG][05.12.2024 12:56:18.138Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] message from [::1]:62366, Akka.Remote.TestKit.Done
+[DEBUG][05.12.2024 12:56:18.139Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] processing Event: <Akka.Remote.TestKit.Done>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/deadLetters] in state AwaitDone
+[DEBUG][05.12.2024 12:56:18.139Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] received Done: starting test
+[DEBUG][05.12.2024 12:56:18.139Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] transition AwaitDone, Akka.Remote.TestKit.ClientFSM+Data -> Connected, Akka.Remote.TestKit.ClientFSM+Data
+[INFO][05.12.2024 12:56:18.141Z][Thread 0005][CancelReservationSpec (akka://CancelReservationSpec)] Role [seed2] started with address [akka.tcp://CancelReservationSpec@localhost:62371]
+[DEBUG][05.12.2024 12:56:18.146Z][Thread 0019][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] processing Event: <<Terminated>: [akka://CancelReservationSpec/user/$a#443882507] - ExistenceConfirmed=True>, StateData: <Akka.Remote.TestKit.ClientFSM+Data> from [akka://CancelReservationSpec/user/$a#443882507] in state Connected
+[WARNING][05.12.2024 12:56:18.148Z][Thread 0019][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] unhandled event <Terminated>: [akka://CancelReservationSpec/user/$a#443882507] - ExistenceConfirmed=True in state Connected
+---------------DISPOSING--------------------
+[DEBUG][05.12.2024 12:56:18.149Z][Thread 0005][ActorSystem(CancelReservationSpec)] System shutdown initiated
+[INFO][05.12.2024 12:56:18.152Z][Thread 0013][akka.tcp://CancelReservationSpec@localhost:62371/user/TestConductorClient] Terminating connection to multi-node test controller due to [Akka.Actor.FSMBase+Shutdown]
+[INFO][05.12.2024 12:56:18.153Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] Client: disconnecting [::1]:62372 from [::1]:62366
+[INFO][05.12.2024 12:56:18.155Z][Thread 0022][remoting-terminator] Shutting down remote daemon.
+[DEBUG][05.12.2024 12:56:18.156Z][Thread 0030][PlayerHandler (akka://CancelReservationSpec)] disconnected from [::1]:62366
+[INFO][05.12.2024 12:56:18.157Z][Thread 0022][remoting-terminator] Remote daemon shut down; proceeding with flushing remote transports.
+[INFO][05.12.2024 12:56:18.170Z][Thread 0009][remoting (akka://CancelReservationSpec)] Remoting shut down
+[INFO][05.12.2024 12:56:18.170Z][Thread 0009][remoting-terminator] Remoting shut down.
+[DEBUG][05.12.2024 12:56:18.171Z][Thread 0008][EventStream] Shutting down: StandardOutLogger started
+
+[Node2:seed2][PASS] TicketingTests.CancelReservationSpec.CancelReservationSpecs

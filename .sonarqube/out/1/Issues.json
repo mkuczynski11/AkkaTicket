@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "4.8.0.0",
+        "fileVersion": "4.8.0-3.23524.11 (f43cd10b)",
+        "semanticVersion": "4.8.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'shardRegion' of 'UserManager.Props(IActorRef)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/UserManagerTests.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 60,
+                  "endLine": 15,
+                  "endColumn": 65
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS1501",
+          "level": "error",
+          "message": "No overload for method 'Props' takes 3 arguments",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/UserTests.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 46,
+                  "endLine": 17,
+                  "endColumn": 51
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS1501",
+          "level": "error",
+          "message": "No overload for method 'Props' takes 3 arguments",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/UserTests.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 46,
+                  "endLine": 31,
+                  "endColumn": 51
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'shardRegion' of 'UserManager.Props(IActorRef)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/UserManagerTests.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 60,
+                  "endLine": 26,
+                  "endColumn": 65
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'shardRegion' of 'TicketingSupervisor.Props(IActorRef)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 63,
+                  "endLine": 19,
+                  "endColumn": 68
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 34,
+                  "endLine": 33,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 34,
+                  "endLine": 51,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 34,
+                  "endLine": 62,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'shardRegion' of 'TicketingSupervisor.Props(IActorRef)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 63,
+                  "endLine": 80,
+                  "endColumn": 68
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 94,
+                  "startColumn": 34,
+                  "endLine": 94,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 112,
+                  "startColumn": 34,
+                  "endLine": 112,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS7036",
+          "level": "error",
+          "message": "There is no argument given that corresponds to the required parameter 'currency' of 'RequestReadEventData.RequestReadEventData(string, string, string)'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/mkuczynski11/Desktop/magisterka/repos/AkkaTicket/TicketingTests/ReservationTests.cs",
+                "region": {
+                  "startLine": 123,
+                  "startColumn": 34,
+                  "endLine": 123,
+                  "endColumn": 54
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "rules": {
+        "CS1501": {
+          "id": "CS1501",
+          "defaultLevel": "error",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1501)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry",
+              "NotConfigurable"
+            ]
+          }
+        },
+        "CS7036": {
+          "id": "CS7036",
+          "defaultLevel": "error",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS7036)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry",
+              "NotConfigurable"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,8 +1,10 @@
+using Akka.Actor;
 using Akka.TestKit;
 using Akka.TestKit.Xunit2;
 using AkkaTicket.Actors;
 using AkkaTicket.Shared.Messages;
 using AkkaTicket.Shared.Messages.User.In;
+using AkkaTicket.Shared.Messages.User.Internal;
 using AkkaTicket.Shared.Messages.User.Out;
 using FluentAssertions;
 
@@ -11,10 +13,12 @@ namespace TicketingTests
     public class UserTests : TestKit
     {
         [Fact]
-        public void User_actor_must_reply_with_its_data()
+        public async void User_actor_must_reply_with_its_data()
         {
             var probe = this.CreateTestProbe();
-            var userActor = Sys.ActorOf(User.Props("martin@gmail.com", "Martin", "Kuczynski"));
+            var userActor = Sys.ActorOf(User.Props("martin@gmail.com"));
+            var initResult = await userActor.Ask<bool>(new Initialize("martin@gmail.com", "Martin", "Kuczynski"));
+            initResult.Should().BeTrue();
 
             userActor.Tell(new RequestReadUserData("123", "martin@gmail.com"), probe.Ref);
             var response = probe.ExpectMsg<RespondUserData>();
@@ -25,10 +29,12 @@ namespace TicketingTests
         }
 
         [Fact]
-        public void User_actor_must_ignore_wrong_read_requests()
+        public async void User_actor_must_ignore_wrong_read_requests()
         {
             var probe = this.CreateTestProbe();
-            var userActor = Sys.ActorOf(User.Props("martin@gmail.com", "Martin", "Kuczynski"));
+            var userActor = Sys.ActorOf(User.Props("martin@gmail.com"));
+            var initResult = await userActor.Ask<bool>(new Initialize("martin@gmail.com", "Martin", "Kuczynski"));
+            initResult.Should().BeTrue();
 
             userActor.Tell(new RequestReadUserData("123", "other@gmail.com"), probe.Ref);
             probe.ExpectNoMsg(TimeSpan.FromMilliseconds(500));

@@ -48,6 +48,14 @@
               "target": "Package",
               "version": "[1.5.17, )"
             },
+            "Akka.Cluster.Sharding": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
+            "Akka.Cluster.TestKit": {
+              "target": "Package",
+              "version": "[1.5.17, )"
+            },
             "Akka.DependencyInjection": {
               "target": "Package",
               "version": "[1.5.17, )"

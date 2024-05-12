@@ -1,6 +1,5 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using AkkaTicket.Shared.Messages;
 using AkkaTicket.Shared.Messages.Event.In;
 using AkkaTicket.Shared.Messages.Reservation.In;
 using AkkaTicket.Shared.Messages.User.In;

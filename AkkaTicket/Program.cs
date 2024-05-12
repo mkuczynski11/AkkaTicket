@@ -11,8 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // creates instance of IPublicHashingService that can be accessed by ASP.NET
 builder.Services.AddSingleton<IActorBridge, AkkaService>();
-
-// starts the IHostedService, which creates the ActorSystem and actors
 builder.Services.AddHostedService<AkkaService>(sp => (AkkaService)sp.GetRequiredService<IActorBridge>());
 
 var app = builder.Build();

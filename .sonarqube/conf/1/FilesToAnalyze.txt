@@ -1,0 +1,10 @@
+﻿C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\GlobalUsings.cs
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\ReservationTests.cs
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\UserManagerTests.cs
+C:\Users\mkuczynski11\Desktop\magisterka\repos\AkkaTicket\TicketingTests\UserTests.cs
+C:\Users\mkuczynski11\.nuget\packages\microsoft.net.test.sdk\17.9.0\build\netcoreapp3.1\Microsoft.NET.Test.Sdk.Program.cs
+C:\Users\mkuczynski11\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.exe
+C:\Users\mkuczynski11\.nuget\packages\microsoft.testplatform.testhost\17.9.0\build\netcoreapp3.1\x64\testhost.dll
+C:\Users\mkuczynski11\.nuget\packages\xunit.runner.visualstudio\2.5.7\build\net6.0\xunit.runner.visualstudio.testadapter.dll
+C:\Users\mkuczynski11\.nuget\packages\xunit.runner.visualstudio\2.5.7\build\net6.0\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\mkuczynski11\.nuget\packages\xunit.runner.visualstudio\2.5.7\build\net6.0\xunit.runner.utility.netcoreapp10.dll
